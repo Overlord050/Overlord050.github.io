@@ -9,7 +9,7 @@ body {
   position: relative;
 }
 
-/* Terminal background styling */
+/* Flickering terminal effect */
 .terminal-background {
   position: absolute;
   top: 0;
@@ -19,11 +19,12 @@ body {
   background: black;
   color: lime;
   font-size: 20px;
-  padding: 10px;
+  padding: 20px; /* Increased padding for better readability */
   white-space: nowrap;
   animation: flicker 1.5s infinite, moveUp 15s linear infinite;
 }
 
+/* Flicker animation */
 @keyframes flicker {
   0% {
     opacity: 1;
@@ -45,6 +46,7 @@ body {
   }
 }
 
+/* Move-up animation */
 @keyframes moveUp {
   0% {
     transform: translateY(0);
@@ -59,26 +61,71 @@ body {
   position: relative;
   z-index: 1;
   text-align: center;
-  padding: 20px;
-  transition: opacity 1s ease-in-out;
+  padding: 40px; /* Increased padding for better spacing */
+  margin-top: 60px; /* Added space above the profile card */
 }
 
+/* Profile image styling */
 .profile-image {
-  width: 150px;
-  height: 150px;
-  border-radius: 50%;
+  width: 300px;
+  height: 200px;
+  border-radius: 10px;
+  margin-bottom: 20px; /* Added margin to separate image from text */
 }
 
+/* Header styles */
 h1 {
-  font-size: 2rem;
-  margin-top: 10px;
+  font-size: 2.5rem; /* Increased font size for better visibility */
+  margin: 20px 0 10px; /* Adjusted margins for better spacing */
 }
 
 h2 {
-  font-size: 1.5rem;
+  font-size: 1.6rem; /* Slightly larger font size */
   margin: 10px 0;
 }
 
 p {
   font-size: 1.2rem;
+  margin: 10px 0; /* Added margin for separation */
+}
+/* Button container styling */
+.button-container {
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Space between buttons */
+  margin-top: 30px;
+}
+
+/* General button styles */
+.btn {
+  display: block;
+  width: 250px; /* Width for buttons */
+  height: 100px; /* Height for buttons */
+  background-size: cover; /* Cover the button area with the image */
+  background-position: center; /* Center the image */
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+/* Button hover effect */
+.btn:hover {
+  background-color: #555; /* Lighten the button color on hover */
+}
+
+/* Specific button backgrounds */
+.tryhackme-btn {
+  background-image: url("images/tryhackme.jpg"); /* Set TryHackMe image */
+}
+
+.hackthebox-btn {
+  background-image: url("images/hackthebox.jpeg"); /* Set HackTheBox image */
+}
+
+/* GitHub and LinkedIn buttons with images */
+.github-btn {
+  background-image: url("images/github.png"); /* Set GitHub image */
+}
+
+.linkedin-btn {
+  background-image: url("images/linkedin.png"); /* Set LinkedIn image */
 }
