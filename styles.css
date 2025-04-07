@@ -21,7 +21,7 @@ body {
   font-size: 20px;
   padding: 20px; /* Increased padding for better readability */
   white-space: nowrap;
-  animation: flicker 2s infinite, moveUp 15s linear infinite; /* Slower flicker */
+  animation: flicker 2s infinite, moveUp 15s linear forwards; /* Use 'forwards' to stop at the end */
 }
 
 /* Flicker animation */
@@ -52,7 +52,7 @@ body {
     transform: translateY(0);
   }
   100% {
-    transform: translateY(-100%);
+    transform: translateY(-100%); /* Move the text out of the visible area */
   }
 }
 
