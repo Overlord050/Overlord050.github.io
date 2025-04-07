@@ -88,6 +88,7 @@ p {
   font-size: 1.2rem;
   margin: 10px 0; /* Added margin for separation */
 }
+
 /* Button container styling */
 .button-container {
   display: flex;
@@ -99,8 +100,8 @@ p {
 /* General button styles */
 .btn {
   display: block;
-  width: 250px; /* Width for buttons */
-  height: 100px; /* Height for buttons */
+  width: 150px; /* Increased width by 20% from 125px */
+  height: 60px; /* Increased height by 20% from 50px */
   background-size: cover; /* Cover the button area with the image */
   background-position: center; /* Center the image */
   border-radius: 5px;
