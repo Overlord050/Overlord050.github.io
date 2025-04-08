@@ -29,16 +29,13 @@
       height: auto;
     }
 
-    .terminal-line {
-      opacity: 0;
-      animation: showHide 2s linear forwards;
+    .typewriter-line {
+      border-right: 2px solid lime;
+      animation: blinkCursor 0.7s step-start infinite;
     }
 
-    @keyframes showHide {
-      0%   { opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 1; }
-      100% { opacity: 0; }
+    @keyframes blinkCursor {
+      50% { border-color: transparent; }
     }
 
     .profile-card {
@@ -133,16 +130,16 @@
           class="btn tryhackme-btn"></a>
         <a href="https://app.hackthebox.com/users/2165201" target="_blank"
           class="btn hackthebox-btn"></a>
-        <a href="https://github.com/OverlordGroningen" target="_blank"
+        <a href="https://github.com/Overlord050" target="_blank"
           class="btn github-btn"></a>
         <a href="https://www.linkedin.com/in/donny-de-beer/" target="_blank"
           class="btn linkedin-btn"></a>
       </div>
     </div>
 
-    <!-- JavaScript to animate lines -->
+    <!-- JavaScript for typewriter -->
     <script>
-    const terminalLines = [
+    const lines = [
       "OverlordGroningen$ welcome to my terminal...",
       "Loading projects...",
       "System online. Accessing skills...",
@@ -150,23 +147,47 @@
       "Portfolio loading..."
     ];
 
-    const terminalContainer = document.getElementById("terminal");
+    const terminal = document.getElementById("terminal");
+    let currentLine = 0;
 
-    terminalLines.forEach((line, index) => {
-      setTimeout(() => {
-        const p = document.createElement("p");
-        p.textContent = line;
-        p.classList.add("terminal-line");
-        p.style.animationDelay = `${index * 2}s`;
-        terminalContainer.appendChild(p);
-      }, 0); // Instant append — animation handles timing
-    });
+    function typeLine(text, callback) {
+      const p = document.createElement("p");
+      terminal.innerHTML = ""; // Clear previous line
+      terminal.appendChild(p);
+      p.classList.add("typewriter-line");
 
-    // Reveal profile after all lines finish (5 lines * 2s each = 10s)
-    setTimeout(() => {
-      terminalContainer.style.display = "none";
-      document.getElementById("profile").classList.add("show");
-    }, terminalLines.length * 2000 + 500);
+      let i = 0;
+      const speed = 40; // typing speed in ms
+
+      function typeChar() {
+        if (i < text.length) {
+          p.textContent += text.charAt(i);
+          i++;
+          setTimeout(typeChar, speed);
+        } else {
+          p.classList.remove("typewriter-line");
+          setTimeout(callback, 500); // small pause before next line
+        }
+      }
+
+      typeChar();
+    }
+
+    function startTypingSequence() {
+      if (currentLine < lines.length) {
+        typeLine(lines[currentLine], () => {
+          currentLine++;
+          startTypingSequence();
+        });
+      } else {
+        // Done! Show profile
+        terminal.style.display = "none";
+        document.getElementById("profile").classList.add("show");
+      }
+    }
+
+    // Start the typing when the page loads
+    window.onload = startTypingSequence;
   </script>
   </body>
 </html>
