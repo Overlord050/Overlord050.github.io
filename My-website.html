@@ -162,7 +162,7 @@
               setTimeout(typeChar, speed);
             } else {
               p.textContent += cursorChar;
-              setTimeout(() => blinkCursor(p, callback), 300);
+              blinkCursor(p, callback);
             }
           }
         
@@ -172,7 +172,9 @@
         function blinkCursor(p, callback) {
           let blinkCount = 0;
           const maxBlinks = 3;
-          let cursorVisible = true;
+          let cursorVisible = false;
+        
+          p.textContent = p.textContent.slice(0, -1);
         
           const blinkInterval = setInterval(() => {
             if (cursorVisible) {
