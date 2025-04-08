@@ -135,78 +135,78 @@
         <a href="https://www.linkedin.com/in/donny-de-beer/" target="_blank"
           class="btn linkedin-btn"></a>
       </div>
-    </div>
-    <script>
-      const lines = [
-        "OverlordGroningen$ welcome to my terminal...",
-        "Loading projects...",
-        "System online. Accessing skills...",
-        "Connecting to GitHub...",
-        "Portfolio loading..."
-      ];
-      
-      const terminal = document.getElementById("terminal");
-      let currentLine = 0;
-      
-      function typeLine(text, callback) {
-        const p = document.createElement("p");
-        terminal.appendChild(p);
-      
-        let i = 0;
-        const speed = 10; // fast typing speed
-        const cursorChar = "I"; // cursor character
-      
-        function typeChar() {
-          if (i < text.length) {
-            p.textContent += cursorChar + text.charAt(i); // Add cursor before each letter
-            i++;
-            setTimeout(typeChar, speed);
+      <script>
+        const lines = [
+          "OverlordGroningen$ welcome to my terminal...",
+          "Loading projects...",
+          "System online. Accessing skills...",
+          "Connecting to GitHub...",
+          "Portfolio loading..."
+        ];
+        
+        const terminal = document.getElementById("terminal");
+        let currentLine = 0;
+        
+        function typeLine(text, callback) {
+          const p = document.createElement("p");
+          terminal.appendChild(p);
+        
+          let i = 0;
+          const speed = 10;
+          const cursorChar = "I";
+        
+          function typeChar() {
+            if (i < text.length) {
+              p.textContent += text.charAt(i);
+              i++;
+              setTimeout(typeChar, speed);
+            } else {
+              p.textContent += cursorChar;
+              setTimeout(() => blinkCursor(p, callback), 300);
+            }
+          }
+        
+          typeChar();
+        }
+        
+        function blinkCursor(p, callback) {
+          let blinkCount = 0;
+          const maxBlinks = 3;
+          let cursorVisible = true;
+        
+          const blinkInterval = setInterval(() => {
+            if (cursorVisible) {
+              p.textContent = p.textContent.slice(0, -1);
+              cursorVisible = false;
+            } else {
+              p.textContent += "I";
+              cursorVisible = true;
+            }
+            blinkCount++;
+        
+            if (blinkCount >= maxBlinks) {
+              clearInterval(blinkInterval);
+              p.textContent = p.textContent.replace("I", "");
+              setTimeout(callback, 300);
+            }
+          }, 150);
+        }
+        
+        function startTypingSequence() {
+          if (currentLine < lines.length) {
+            typeLine(lines[currentLine], () => {
+              currentLine++;
+              startTypingSequence();
+            });
           } else {
-            setTimeout(() => blinkCursor(p, callback), 300); // start blinking cursor after typing ends
+            setTimeout(() => {
+              terminal.style.display = "none";
+              document.getElementById("profile").classList.add("show");
+            }, 1000);
           }
         }
-      
-        typeChar();
-      }
-      
-      function blinkCursor(p, callback) {
-        let blinkCount = 0;
-        const maxBlinks = 3; // How many times the cursor blinks (show + hide = 1 blink)
-        let cursorVisible = true;
-      
-        const blinkInterval = setInterval(() => {
-          if (cursorVisible) {
-            p.textContent = p.textContent.slice(0, -1); // remove cursor
-            cursorVisible = false;
-          } else {
-            p.textContent += "I"; // add cursor back
-            cursorVisible = true;
-          }
-          blinkCount++;
-      
-          if (blinkCount >= maxBlinks) {
-            clearInterval(blinkInterval);
-            p.textContent = p.textContent.replace("I", ""); // Clean up the cursor
-            setTimeout(callback, 300); // slight delay before moving to next line
-          }
-        }, 300); // Blink every 300ms (faster)
-      }
-      
-      function startTypingSequence() {
-        if (currentLine < lines.length) {
-          typeLine(lines[currentLine], () => {
-            currentLine++;
-            startTypingSequence();
-          });
-        } else {
-          setTimeout(() => {
-            terminal.style.display = "none";
-            document.getElementById("profile").classList.add("show");
-          }, 1000);
-        }
-      }
-      
-      document.addEventListener("DOMContentLoaded", startTypingSequence);
-      </script>
-  </body>
-</html>
+        
+        document.addEventListener("DOMContentLoaded", startTypingSequence);
+        </script>
+    </body>
+  </html>
