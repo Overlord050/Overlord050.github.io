@@ -154,6 +154,7 @@
       
         let i = 0;
         const speed = 10; // fast typing speed
+        const cursorChar = "I"; // cursor character
       
         function typeChar() {
           if (i < text.length) {
@@ -161,6 +162,7 @@
             i++;
             setTimeout(typeChar, speed);
           } else {
+            p.textContent += cursorChar; // Add cursor after text
             blinkCursor(p, callback);
           }
         }
@@ -170,26 +172,25 @@
       
       function blinkCursor(p, callback) {
         let blinkCount = 0;
-        const maxBlinks = 4; // How many times it blinks (show + hide = 1 blink)
+        const maxBlinks = 4; // How many times the cursor blinks (show + hide = 1 blink)
         let cursorVisible = true;
-        const cursorChar = "I";
       
         const blinkInterval = setInterval(() => {
           if (cursorVisible) {
             p.textContent = p.textContent.slice(0, -1); // remove cursor
             cursorVisible = false;
           } else {
-            p.textContent += cursorChar; // add cursor
+            p.textContent += "I"; // add cursor back
             cursorVisible = true;
           }
           blinkCount++;
       
           if (blinkCount >= maxBlinks) {
             clearInterval(blinkInterval);
-            p.textContent = p.textContent.replace(cursorChar, ""); // Clean up cursor
-            setTimeout(callback, 300); // slight delay before next line
+            p.textContent = p.textContent.replace("I", ""); // Clean up the cursor
+            setTimeout(callback, 300); // slight delay before moving to next line
           }
-        }, 200); // Blink every 200ms
+        }, 500); // Blink every 500ms
       }
       
       function startTypingSequence() {
