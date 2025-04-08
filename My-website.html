@@ -158,12 +158,11 @@
       
         function typeChar() {
           if (i < text.length) {
-            p.textContent += text.charAt(i);
+            p.textContent += cursorChar + text.charAt(i); // Add cursor before each letter
             i++;
             setTimeout(typeChar, speed);
           } else {
-            p.textContent += cursorChar; // Add cursor after text
-            blinkCursor(p, callback);
+            setTimeout(() => blinkCursor(p, callback), 300); // start blinking cursor after typing ends
           }
         }
       
@@ -172,7 +171,7 @@
       
       function blinkCursor(p, callback) {
         let blinkCount = 0;
-        const maxBlinks = 4; // How many times the cursor blinks (show + hide = 1 blink)
+        const maxBlinks = 3; // How many times the cursor blinks (show + hide = 1 blink)
         let cursorVisible = true;
       
         const blinkInterval = setInterval(() => {
@@ -190,7 +189,7 @@
             p.textContent = p.textContent.replace("I", ""); // Clean up the cursor
             setTimeout(callback, 300); // slight delay before moving to next line
           }
-        }, 500); // Blink every 500ms
+        }, 300); // Blink every 300ms (faster)
       }
       
       function startTypingSequence() {
