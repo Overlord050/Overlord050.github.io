@@ -137,57 +137,76 @@
       </div>
     </div>
 
-    <!-- JavaScript for typewriter -->
     <script>
-    const lines = [
-      "OverlordGroningen$ welcome to my terminal...",
-      "Loading projects...",
-      "System online. Accessing skills...",
-      "Connecting to GitHub...",
-      "Portfolio loading..."
-    ];
-
-    const terminal = document.getElementById("terminal");
-    let currentLine = 0;
-
-    function typeLine(text, callback) {
-      const p = document.createElement("p");
-      terminal.innerHTML = ""; // Clear previous line
-      terminal.appendChild(p);
-      p.classList.add("typewriter-line");
-
-      let i = 0;
-      const speed = 40; // typing speed in ms
-
-      function typeChar() {
-        if (i < text.length) {
-          p.textContent += text.charAt(i);
-          i++;
-          setTimeout(typeChar, speed);
+      const lines = [
+        "OverlordGroningen$ welcome to my terminal...",
+        "Loading projects...",
+        "System online. Accessing skills...",
+        "Connecting to GitHub...",
+        "Portfolio loading..."
+      ];
+      
+      const terminal = document.getElementById("terminal");
+      let currentLine = 0;
+      
+      function typeLine(text, callback) {
+        const p = document.createElement("p");
+        terminal.innerHTML = ""; // Clear previous line
+        terminal.appendChild(p);
+      
+        let i = 0;
+        const speed = 10; // much faster typing speed
+      
+        function typeChar() {
+          if (i < text.length) {
+            p.textContent += text.charAt(i);
+            i++;
+            setTimeout(typeChar, speed);
+          } else {
+            blinkLine(p, callback);
+          }
+        }
+      
+        function blinkLine(element, doneCallback) {
+          let blinks = 0;
+          const maxBlinks = 3;
+      
+          const blinkInterval = setInterval(() => {
+            if (element.style.visibility === "visible" || element.style.visibility === "") {
+              element.style.visibility = "hidden";
+            } else {
+              element.style.visibility = "visible";
+            }
+      
+            blinks++;
+            if (blinks >= maxBlinks * 2) { // toggles twice per blink
+              clearInterval(blinkInterval);
+              element.style.visibility = "visible"; // make sure it's visible at the end
+              setTimeout(doneCallback, 200);
+            }
+          }, 200);
+        }
+      
+        typeChar();
+      }
+      
+      function startTypingSequence() {
+        if (currentLine < lines.length) {
+          typeLine(lines[currentLine], () => {
+            currentLine++;
+            startTypingSequence();
+          });
         } else {
-          p.classList.remove("typewriter-line");
-          setTimeout(callback, 500); // small pause before next line
+          // Done! Hide terminal and show profile (if exists)
+          const profile = document.getElementById("profile");
+          if (profile) {
+            terminal.style.display = "none";
+            profile.classList.add("show");
+          }
         }
       }
-
-      typeChar();
-    }
-
-    function startTypingSequence() {
-      if (currentLine < lines.length) {
-        typeLine(lines[currentLine], () => {
-          currentLine++;
-          startTypingSequence();
-        });
-      } else {
-        // Done! Show profile
-        terminal.style.display = "none";
-        document.getElementById("profile").classList.add("show");
-      }
-    }
-
-    // Start the typing when the page loads
-    window.onload = startTypingSequence;
-  </script>
+      
+      document.addEventListener("DOMContentLoaded", startTypingSequence);
+      </script>
   </body>
 </html>
