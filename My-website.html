@@ -155,7 +155,7 @@
         terminal.appendChild(p);
       
         let i = 0;
-        const speed = 10; // much faster typing speed
+        const speed = 10; // very fast typing speed
       
         function typeChar() {
           if (i < text.length) {
@@ -163,28 +163,8 @@
             i++;
             setTimeout(typeChar, speed);
           } else {
-            blinkLine(p, callback);
+            setTimeout(callback, 300); // short pause before next line
           }
-        }
-      
-        function blinkLine(element, doneCallback) {
-          let blinks = 0;
-          const maxBlinks = 3;
-      
-          const blinkInterval = setInterval(() => {
-            if (element.style.visibility === "visible" || element.style.visibility === "") {
-              element.style.visibility = "hidden";
-            } else {
-              element.style.visibility = "visible";
-            }
-      
-            blinks++;
-            if (blinks >= maxBlinks * 2) { // toggles twice per blink
-              clearInterval(blinkInterval);
-              element.style.visibility = "visible"; // make sure it's visible at the end
-              setTimeout(doneCallback, 200);
-            }
-          }, 200);
         }
       
         typeChar();
@@ -197,12 +177,9 @@
             startTypingSequence();
           });
         } else {
-          // Done! Hide terminal and show profile (if exists)
-          const profile = document.getElementById("profile");
-          if (profile) {
-            terminal.style.display = "none";
-            profile.classList.add("show");
-          }
+          // Done! Show profile
+          terminal.style.display = "none";
+          document.getElementById("profile").classList.add("show");
         }
       }
       
