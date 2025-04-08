@@ -136,7 +136,6 @@
           class="btn linkedin-btn"></a>
       </div>
     </div>
-
     <script>
       const lines = [
         "OverlordGroningen$ welcome to my terminal...",
@@ -151,10 +150,10 @@
       
       function typeLine(text, callback) {
         const p = document.createElement("p");
-        terminal.appendChild(p); // NO clearing anymore!
+        terminal.appendChild(p); // ADD line, not clear!
       
         let i = 0;
-        const speed = 10; // fast typing speed
+        const speed = 10; // fast typing
       
         function typeChar() {
           if (i < text.length) {
@@ -162,7 +161,7 @@
             i++;
             setTimeout(typeChar, speed);
           } else {
-            setTimeout(callback, 300); // small pause before next line
+            setTimeout(callback, 300); // short pause between lines
           }
         }
       
@@ -176,7 +175,7 @@
             startTypingSequence();
           });
         } else {
-          // Done! Wait 1s longer before showing profile
+          // After all lines, wait 1 second then show profile
           setTimeout(() => {
             terminal.style.display = "none";
             document.getElementById("profile").classList.add("show");
