@@ -150,10 +150,10 @@
       
       function typeLine(text, callback) {
         const p = document.createElement("p");
-        terminal.appendChild(p); // ADD line, not clear!
+        terminal.appendChild(p);
       
         let i = 0;
-        const speed = 10; // fast typing
+        const speed = 10; // fast typing speed
       
         function typeChar() {
           if (i < text.length) {
@@ -161,11 +161,35 @@
             i++;
             setTimeout(typeChar, speed);
           } else {
-            setTimeout(callback, 300); // short pause between lines
+            blinkCursor(p, callback);
           }
         }
       
         typeChar();
+      }
+      
+      function blinkCursor(p, callback) {
+        let blinkCount = 0;
+        const maxBlinks = 4; // How many times it blinks (show + hide = 1 blink)
+        let cursorVisible = true;
+        const cursorChar = "I";
+      
+        const blinkInterval = setInterval(() => {
+          if (cursorVisible) {
+            p.textContent = p.textContent.slice(0, -1); // remove cursor
+            cursorVisible = false;
+          } else {
+            p.textContent += cursorChar; // add cursor
+            cursorVisible = true;
+          }
+          blinkCount++;
+      
+          if (blinkCount >= maxBlinks) {
+            clearInterval(blinkInterval);
+            p.textContent = p.textContent.replace(cursorChar, ""); // Clean up cursor
+            setTimeout(callback, 300); // slight delay before next line
+          }
+        }, 200); // Blink every 200ms
       }
       
       function startTypingSequence() {
@@ -175,7 +199,6 @@
             startTypingSequence();
           });
         } else {
-          // After all lines, wait 1 second then show profile
           setTimeout(() => {
             terminal.style.display = "none";
             document.getElementById("profile").classList.add("show");
